@@ -15,4 +15,15 @@ namespace Networking.Common
         Login = 1,
         LobbyRequest
     }
+
+    public enum GameServerToClient
+    {
+        Welcome = 1,
+    }
+    
+    public enum ClientToGameServer
+    {
+        WelcomeReceived = 1,
+        PlayerMove,
+    }
 }

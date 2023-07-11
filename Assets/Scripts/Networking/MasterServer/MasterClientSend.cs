@@ -2,14 +2,14 @@ using Networking.Common;
 using Networking.Packets;
 using UI;
 
-namespace Networking.ClientLogin
+namespace Networking.MasterServer
 {
-    public abstract class LoginClientSend
+    public abstract class MasterClientSend
     {
         private static void SendTcpData(Packet packet)
         {
             packet.WriteLength();
-            LoginClient.Instance.TcpConn.SendData(packet);
+            MasterClient.Instance.TcpConn.SendData(packet);
         }
 
         #region Packets

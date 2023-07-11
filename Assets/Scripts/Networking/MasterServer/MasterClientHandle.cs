@@ -1,10 +1,11 @@
 using Networking.Packets;
 using UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-namespace Networking.ClientLogin
+namespace Networking.MasterServer
 {
-    public class LoginClientHandle
+    public class MasterClientHandle
     {
         public static void Welcome(Packet packet)
         {
@@ -28,8 +29,8 @@ namespace Networking.ClientLogin
         
         public static void GoJoinLobby(Packet packet)
         {
-            Debug.Log("Let's play");
+            Global.LobbyIdToJoin = packet.ReadString();
+            SceneManager.LoadScene("MainScene");
         }
-        
     }
 }

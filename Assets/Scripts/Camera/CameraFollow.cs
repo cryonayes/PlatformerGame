@@ -6,11 +6,12 @@ namespace Camera
     {
         public Transform player;
         public UnityEngine.Camera cam;
-        public float horizontalMargin, verticalMargin, depth = -10, smoothTime = 0.25f;
+        public float horizontalMargin = 1.0f, verticalMargin = 0.3f, depth = -10.0f, smoothTime = 0.25f;
         private Vector3 _target, _lastPosition, _currentVelocity;
     
         private void LateUpdate()
         {
+            if (player == null) return;
             SetTarget();
             MoveCamera();
         }

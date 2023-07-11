@@ -1,9 +1,16 @@
+using System;
 using System.Collections.Generic;
+using Camera;
+using Networking.GameServer;
 using Player;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject ClientManager;
+    public GameObject PlayerPrefab;
+    public CameraFollow Camera;
+
     public static GameManager Instance;
     public static Dictionary<int, PlayerManager> players = new();
 
@@ -16,17 +23,13 @@ public class GameManager : MonoBehaviour
             Destroy(this);
     }
 
-    /*
-    public void SpawnPlayer(int _id, string _username, Vector3 _position)
+    private void Start()
     {
-        GameObject player;
-        if (_id == Client.instance.myId)
-            player = Instantiate(localPlayerPrefab, _position, Quaternion.identity);
-        else
-            player = Instantiate(playerPrefab, _position, Quaternion.identity);
+        ClientManager.SetActive(true);
+        while (!GameClient.Instance) {}
 
-        player.GetComponent<PlayerManager>().Initialize(_id, _username);
-        players.Add(_id, player.GetComponent<PlayerManager>());
+        Camera.player = Instantiate(PlayerPrefab, Vector3.zero, Quaternion.identity).transform;
     }
-    */
+    
+    
 }

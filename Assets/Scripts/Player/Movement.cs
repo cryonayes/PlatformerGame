@@ -1,3 +1,4 @@
+using Networking.GameServer;
 using UnityEngine;
 
 namespace Player
@@ -18,6 +19,12 @@ namespace Player
             transform.Translate(_movementX * (speed * Time.deltaTime), 0.0f, 0.0f);
             Animate();
             Jump();
+        }
+
+        private void FixedUpdate()
+        {
+            var pos = transform.position;
+            GameServerSend.PlayerMove(pos);
         }
 
         private void Jump()

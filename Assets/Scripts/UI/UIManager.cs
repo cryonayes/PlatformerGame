@@ -1,4 +1,4 @@
-using Networking.ClientLogin;
+using Networking.MasterServer;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -27,12 +27,12 @@ namespace UI
 
         private void Start()
         {
-            LoginClient.Instance.ConnectToServer();
+            MasterClient.Instance.ConnectToServer();
         }
         
         public void LoginButton()
         {
-            LoginClientSend.Login();
+            MasterClientSend.Login();
         }
 
         public void LoginSuccess()
@@ -44,7 +44,7 @@ namespace UI
 
         public void LobbyButton()
         {
-            LoginClientSend.EnterLobby();
+            MasterClientSend.EnterLobby();
         }
     }
 }

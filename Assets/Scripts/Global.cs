@@ -15,4 +15,5 @@ public static class Global
     public static string Token = "";
     public static string GameServerIp = "";
     public static int GameServerPort = 0;
+    public static string LobbyIdToJoin = "";
 }
