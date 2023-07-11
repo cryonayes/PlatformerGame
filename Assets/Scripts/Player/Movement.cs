@@ -19,12 +19,8 @@ namespace Player
             transform.Translate(_movementX * (speed * Time.deltaTime), 0.0f, 0.0f);
             Animate();
             Jump();
-        }
-
-        private void FixedUpdate()
-        {
-            var pos = transform.position;
-            GameServerSend.PlayerMove(pos);
+            if (_movementX > 0 || !IsGrounded)
+                GameServerSend.PlayerMove(transform.position);
         }
 
         private void Jump()

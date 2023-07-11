@@ -21,7 +21,7 @@ namespace Networking.GameServer
         private delegate void PacketHandler(Packet packet);
         private static Dictionary<int, PacketHandler> _packetHandlers;
 
-        public int _myId = 0;
+        public int _myId;
 
         private void Awake()
         {
@@ -55,7 +55,7 @@ namespace Networking.GameServer
         /// <summary>Initializes all necessary client data.</summary>
         private void InitializeClientData()
         {
-            _packetHandlers = new Dictionary<int, PacketHandler>()
+            _packetHandlers = new Dictionary<int, PacketHandler>
             {
                 { (int)GameServerToClient.Welcome, GameClientHandle.Welcome },
             };

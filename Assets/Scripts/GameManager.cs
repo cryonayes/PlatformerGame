@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public static Dictionary<int, PlayerManager> players = new();
 
-
     private void Awake()
     {
         if (Instance == null)
@@ -26,10 +25,16 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         ClientManager.SetActive(true);
-        while (!GameClient.Instance) {}
+        while (GameClient.Instance.UdpConn != null) {}
 
         Camera.player = Instantiate(PlayerPrefab, Vector3.zero, Quaternion.identity).transform;
     }
-    
-    
+
+    private void SpawnPlayers()
+    {
+    }
+    private void StartTheGame()
+    {
+        
+    }
 }
