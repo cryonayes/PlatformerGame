@@ -6,6 +6,7 @@ using Networking.Common;
 using Networking.Packets;
 using Networking.Threading;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Networking.GameServer
 {
@@ -21,7 +22,7 @@ namespace Networking.GameServer
         private delegate void PacketHandler(Packet packet);
         private static Dictionary<int, PacketHandler> _packetHandlers;
 
-        public int _myId;
+        public int myId;
 
         private void Awake()
         {
@@ -58,6 +59,8 @@ namespace Networking.GameServer
             _packetHandlers = new Dictionary<int, PacketHandler>
             {
                 { (int)GameServerToClient.Welcome, GameClientHandle.Welcome },
+                { (int)GameServerToClient.AddPlayers, GameClientHandle.AddPlayersToGame },
+                { (int)GameServerToClient.PlayerMove, GameClientHandle.HandlePlayerMove }
             };
             Debug.Log("Initialized packets.");
         }
@@ -99,7 +102,7 @@ namespace Networking.GameServer
 
                 if (!TcpSocket.Connected)
                     return;
-
+                Instance.UdpConn.Connect(((IPEndPoint)Instance.TcpConn.TcpSocket.Client.LocalEndPoint).Port);
                 _stream = TcpSocket.GetStream();
                 _receivedData = new Packet();
                 _stream.BeginRead(_receiveBuffer, 0, DataBufferSize, ReceiveCallback, null);
@@ -219,9 +222,6 @@ namespace Networking.GameServer
 
                 UdpSocket.Connect(EndPoint);
                 UdpSocket.BeginReceive(ReceiveCallback, null);
-
-                using var packet = new Packet();
-                SendData(packet);
             }
 
             /// <summary>Sends data to the client via UDP.</summary>
@@ -230,7 +230,7 @@ namespace Networking.GameServer
             {
                 try
                 {
-                    packet.InsertInt(Instance._myId); // Insert the client's ID at the start of the packet
+                    packet.InsertInt(Instance.myId); // Insert the client's ID at the start of the packet
                     if (UdpSocket != null)
                         UdpSocket.BeginSend(packet.ToArray(), packet.Length(), null, null);
                 }

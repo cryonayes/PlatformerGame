@@ -1,7 +1,5 @@
 using Networking.MasterServer;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
@@ -15,7 +13,6 @@ namespace UI
         
         public InputField usernameField;
         public InputField passwordField;
-        public InputField lobbyNameField;
 
         private void Awake()
         {
@@ -34,7 +31,12 @@ namespace UI
         {
             MasterClientSend.Login();
         }
-
+        
+        public void RegisterButton()
+        {
+            MasterClientSend.Register();
+        }
+        
         public void LoginSuccess()
         {
             loginScreen.SetActive(false);
@@ -42,9 +44,20 @@ namespace UI
             Debug.Log($"Login Success. GameServerIP: {Global.GameServerIp} Port: {Global.GameServerPort.ToString()}");
         }
 
+        public void RegisterSuccess()
+        {
+            // Register success yaz
+        }
+
+        public void RegisterFailed()
+        {
+            // Register failed yaz
+        }
+
         public void LobbyButton()
         {
             MasterClientSend.EnterLobby();
         }
+        
     }
 }

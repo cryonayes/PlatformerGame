@@ -50,9 +50,12 @@ namespace Networking.MasterServer
             _packetHandlers = new Dictionary<int, PacketHandler>()
             {
                 { (int)MasterToClient.Welcome, MasterClientHandle.Welcome },
-                { (int)MasterToClient.LoginSuccess, MasterClientHandle.LoginSuccess},
+                { (int)MasterToClient.LoginSuccess, MasterClientHandle.LoginSuccess },
+                { (int)MasterToClient.RegisterSuccess, MasterClientHandle.RegisterSuccess },
+                { (int)MasterToClient.RegisterFailed, MasterClientHandle.RegisterFailed },
                 { (int)MasterToClient.LoginFailed, MasterClientHandle.LoginFail },
                 { (int)MasterToClient.GoJoinLobby, MasterClientHandle.GoJoinLobby },
+                { (int)MasterToClient.ScoreTable, MasterClientHandle.ScoreTable }
             };
             Debug.Log("Initialized packets.");
         }

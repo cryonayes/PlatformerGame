@@ -18,16 +18,6 @@ namespace Networking.GameServer
             GameClient.Instance.UdpConn?.SendData(packet);
         }
 
-        public static void WelcomeResponse()
-        {
-            using var packet = new Packet((int)ClientToGameServer.WelcomeReceived);
-            
-            packet.Write(GameClient.Instance._myId);
-            packet.Write(Global.Token);
-            
-            SendTcpData(packet);
-        }
-
         public static void PlayerMove(Vector3 position)
         {
             using var packet = new Packet((int)ClientToGameServer.PlayerMove);
@@ -37,6 +27,15 @@ namespace Networking.GameServer
             packet.Write(position.z);
             
             SendUdpData(packet);
+        }
+
+
+        public static void JoinLobbyRequest(string lobbyId)
+        {
+            using var packet = new Packet((int)ClientToGameServer.JoinLobby);
+            
+            packet.Write(lobbyId);
+            SendTcpData(packet);
         }
     }
 }

@@ -1,4 +1,7 @@
+using System;
 using Networking.GameServer;
+using Networking.MasterServer;
+using UI;
 using UnityEngine;
 
 namespace Player
@@ -19,7 +22,7 @@ namespace Player
             transform.Translate(_movementX * (speed * Time.deltaTime), 0.0f, 0.0f);
             Animate();
             Jump();
-            if (_movementX > 0 || !IsGrounded)
+            if (_movementX != 0 || !IsGrounded)
                 GameServerSend.PlayerMove(transform.position);
         }
 
@@ -34,6 +37,13 @@ namespace Player
         {
             if (other.gameObject.CompareTag("Ground"))
                 IsGrounded = true;
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (!other.CompareTag("Finish")) return;
+            MasterClientSend.PlayerFinished();
+            enabled = false;
         }
 
         private void Animate()

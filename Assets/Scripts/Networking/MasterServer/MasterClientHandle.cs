@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Networking.Packets;
 using UI;
 using UnityEngine;
@@ -22,6 +23,17 @@ namespace Networking.MasterServer
             
             UIManager.instance.LoginSuccess();
         }
+        
+        public static void RegisterSuccess(Packet packet)
+        {
+            UIManager.instance.RegisterSuccess();
+        }
+
+        public static void RegisterFailed(Packet packet)
+        {
+            UIManager.instance.RegisterFailed();
+        }
+
         public static void LoginFail(Packet packet)
         {
             Debug.Log("Login failed");
@@ -31,6 +43,16 @@ namespace Networking.MasterServer
         {
             Global.LobbyIdToJoin = packet.ReadString();
             SceneManager.LoadScene("MainScene");
+        }
+
+        public static void ScoreTable(Packet packet)
+        {
+            var scoreList = new List<(string player, int score)>();
+            var userCount = packet.ReadInt();
+            
+            for (var i = 0; i < userCount; i++)
+                scoreList.Add((packet.ReadString(), packet.ReadInt()));
+            GameManager.Instance.HandleScoreTable(scoreList);
         }
     }
 }

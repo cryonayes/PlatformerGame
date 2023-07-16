@@ -1,5 +1,3 @@
-using System;
-using System.Net;
 using Networking.Packets;
 
 namespace Networking.GameServer
@@ -8,10 +6,25 @@ namespace Networking.GameServer
     {
         public static void Welcome(Packet packet)
         {
-            Console.WriteLine("GameServer welcome received!");
-            GameClient.Instance._myId = packet.ReadInt();
-            GameClient.Instance.UdpConn.Connect(((IPEndPoint)GameClient.Instance.TcpConn.TcpSocket.Client.LocalEndPoint).Port);
-            GameServerSend.WelcomeResponse();
+            GameClient.Instance.myId = packet.ReadInt();
+            GameServerSend.JoinLobbyRequest(Global.LobbyIdToJoin);
+        }
+
+        public static void AddPlayersToGame(Packet packet)
+        {
+            // Lobby'de olması gereken oyuncuları spawn et.
+            var playerID = packet.ReadInt();
+            var playerPos = packet.ReadVector3();
+            
+            GameManager.Instance.SpawnPlayers(playerID, playerPos);
+        }
+
+        public static void HandlePlayerMove(Packet packet)
+        {
+            var movingID = packet.ReadInt();
+            var moveVec = packet.ReadVector3();
+
+            GameManager.players[movingID].transform.position = moveVec;
         }
     }
 }

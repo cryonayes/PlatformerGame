@@ -1,29 +1,45 @@
 namespace Networking.Common
 {
-    // Sent from server to client.
     public enum MasterToClient
     {
         Welcome = 1,
         LoginSuccess,
         LoginFailed,
+        RegisterSuccess,
+        RegisterFailed,
         GoJoinLobby,
+        ScoreTable
     }
 
-// Sent from client to server.
     public enum ClientToMaster
     {
-        Login = 1,
-        LobbyRequest
+        Login = 10,
+        Register,
+        LobbyRequest,
+        OnFinishLine,
     }
 
     public enum GameServerToClient
     {
-        Welcome = 1,
+        Welcome = 20,
+        AddPlayers,
+        PlayerMove
     }
     
     public enum ClientToGameServer
     {
-        WelcomeReceived = 1,
+        JoinLobby = 30,
         PlayerMove,
+    }
+    
+    public enum GameServerToMaster
+    {
+        Welcome = 40,
+        LobbyReady
+    }
+
+    public enum MasterToGameServer
+    {
+        LobbyInfo = 50
     }
 }
